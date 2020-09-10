@@ -1,7 +1,7 @@
 var balX = 600;
 var balY = 500;
-var richtingX = 5;
-var richtingY = 5;
+var richtingX = 1;
+var richtingY = 1;
 var array = new Array(21);
 var array2 = new Array(21);
 var array3 = new Array(21);
@@ -9,7 +9,8 @@ var array4 = new Array(21);
 var array5 = new Array(21);
 var blokHoogte = 100;
 var balStraal = 15;
-
+var plankX = mouseX;
+var px = Math.abs(balX - (mouseX - 100));
 
 /**
  * setup
@@ -47,6 +48,12 @@ function draw() {
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
 
+  textSize(30);
+  text(balX, 50, 100);
+  text(balY, 150, 100);
+  text(Math.sin(3.14 + (10+px) / 220 * 3.14) * 10, 300, 100);
+  text(Math.abs(balX - (mouseX - 100)), 400, 100);
+
   // stel vulkleur in
   fill(255, 0, 0);
 
@@ -57,10 +64,11 @@ function draw() {
 
 
   // teken platform
-  rect(balX - 100, 650, 200, 20);
+  rect(mouseX - 100, 650, 200, 20);
   // omkeren als tegen platform
-  if (balY == 650 - balStraal && balX >= balX-100 && balX <= balX+100) {
-      richtingY = richtingY * -1;
+  if (balY >= 650 - balStraal && balY <= 670 - balStraal && balX >= mouseX-100 && balX <= mouseX+100) {
+      richtingY = Math.sin(3.14 + (10+px) / 220 * 3.14) * 10;
+      richtingX = Math.cos(3.14 - (10+px) / 220 * 3.14) * 10;
 
   }
   // omkeren als tegen zijkant
