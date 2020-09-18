@@ -27,11 +27,20 @@ class Bal {
       this.y = this.y + this.speedY;
 
       if (this.x <= 0 || this.x >= 1280 ) {
-         this.speedX = this.speedX * -1
+         this.speedX = this.speedX * -1;
       }
 
       if (this.y <= 0 || this.y >= 720) {
          this.speedY = this.speedY * -1;
+      }
+
+      if (this.x > 0 && this.x < 1280 && this.y > 50 && this.y < 75) {
+            var welkBlok = Math.floor(this.x/128);
+            var data = blokken[welkBlok];
+            if (data > 0) {
+                blokken[welkBlok] = data - 1;
+                this.speedY = this.speedY * -1;
+            }
       }
    }
 }
@@ -44,20 +53,32 @@ class Blok {
     this.blokHeight = myBlockHeight;
     }
 
-    showBlok() {
+    show() {
         rect(this.blokX, this.blokY, this.blokWidth, this.blokHeight);
+    }
+
+    update() {
+        if (this.x > 0 && this.x < 1280 && this.y > 50 && this.y < 75) {
+            this.speedY = this.speedY * -1;
+        }
     }
 
 }
 
 
-
-
 var ballen = [new Bal(50, 100, 6, 3, false),
               new Bal(300, 150, 5, 7, true)];
 
-var blokken = [new Blok(20, 50, 100, 25),
-               new Blok(121, 50, 100, 25)];
+
+var blokken = [];   
+for (var i = 0; i < 10; i++) {
+    blokken.push(
+        new Blok(128*i, 50, 128, 25)
+    );
+    var data = blokken[i];
+}
+
+
 
 
 function setup() {
@@ -81,7 +102,8 @@ function draw() {
 
   for (var i = 0; i < blokken.length; i++) {
       var blok = blokken[i];
-      blok.showBlok();
+      blok.show();
+      blok.update();
   }
   
 }
