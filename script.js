@@ -37,13 +37,15 @@ class Bal {
 }
 
 class Blok {
-    constructor(myBlokX, myBlokY) {
+    constructor(myBlokX, myBlokY, myBlokWidth, myBlockHeight) {
     this.blokX = myBlokX;
     this.blokY = myBlokY;
+    this.blokWidth = myBlokWidth;
+    this.blokHeight = myBlockHeight;
     }
 
     showBlok() {
-        rect(this.blokX, this.blokY, 128, 30);
+        rect(this.blokX, this.blokY, this.blokWidth, this.blokHeight);
     }
 
 }
@@ -54,7 +56,8 @@ class Blok {
 var ballen = [new Bal(50, 100, 6, 3, false),
               new Bal(300, 150, 5, 7, true)];
 
-
+var blokken = [new Blok(20, 50, 100, 25),
+               new Blok(121, 50, 100, 25)];
 
 
 function setup() {
@@ -76,6 +79,9 @@ function draw() {
     bal.update();
   }
 
-rect(400, 400, 100, 25);
+  for (var i = 0; i < blokken.length; i++) {
+      var blok = blokken[i];
+      blok.showBlok();
+  }
   
 }
