@@ -57,20 +57,17 @@ class Blok {
     show() {
         fill(255, 0, 0);
         rect(this.blokX, this.blokY, this.blokWidth, this.blokHeight);
-    }
+    }//show
 
     update() {
         if (this.x > 0 && this.x < 1280 && this.y > 50 && this.y < 75) {
             this.speedY = this.speedY * -1;
         }
-    }
+    }//update
 
-}
-
+}//class Bal
 
 var ballen = [new Bal(50, 100, 5, 5, false)];
-
-
 var blokken = [];   
 for (var j = 0; j < 4; j++) {
     for (var i = 0; i < 10; i++) {
@@ -81,16 +78,11 @@ for (var j = 0; j < 4; j++) {
     }
 }
 
-
-
-
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 }
  
-
-
 
 function draw() {
   // Kleur de achtergrond blauw, zodat je het kunt zien
@@ -102,16 +94,14 @@ function draw() {
     bal.show();
     bal.update();
   }
-
+  // ga alle blokken af
   for (var i = 0; i < blokken.length; i++) {
       var blok = blokken[i];
       blok.show();
       blok.update();
   }
   
+  //teken platform
   fill(255, 0, 0);
   rect(mouseX - 100, 600, 200, 25);
-  
-
-
 }
