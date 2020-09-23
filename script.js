@@ -1,15 +1,15 @@
+
+
+
 class Bal {
    constructor(myX, myY, mySpeedX, mySpeedY, mySuper) {
       this.x = myX;
       this.y = myY;
       this.speedX = mySpeedX;
       this.speedY = mySpeedY;
-      this.diameter = 80;
+      this.diameter = 50;
       this.isSuper = mySuper;
    }
-
-
-
 
    show() {
       if (this.isSuper === true) {
@@ -20,27 +20,31 @@ class Bal {
       }
       
       ellipse(this.x, this.y, this.diameter, this.diameter);
-   }
+   }//show
 
    update() {
       this.x = this.x + this.speedX;
       this.y = this.y + this.speedY;
-
-      if (this.x <= 0 || this.x >= 1280 ) {
+    // ballen omkeren tegen muren
+      if (this.x <= 0 + 0.5*this.diameter || this.x >= 1280 - 0.5*this.diameter ) {
          this.speedX = this.speedX * -1;
       }
 
-      if (this.y <= 0 || this.y >= 720) {
+      if (this.y <= 0 + 0.5*this.diameter || this.y >= 720 - 0.5*this.diameter) {
          this.speedY = this.speedY * -1;
       }
-
-      if (this.x > mouseX - 100 && this.x < mouseX + 100 && this.y > 600 + 40 && this.y < 625 - 40) {
-            this.speedY = this.speedY * -1;
+      // ballen omkeren tegen plank
+      if (this.x > mouseX - 100 && this.x < mouseX + 100 && this.y > 600 - 0.5*this.diameter && this.y < 625 + 0.5*this.diameter) {
+            this.speedY = 0.08 * Math.abs(mouseX-this.x) - 10;
+            if (mouseX-this.x > 0){
+                this.speedX = -1 * Math.sqrt(100-(this.speedY*this.speedY));
+            }
+            if (mouseX-this.x < 0){
+                this.speedX = Math.sqrt(100-(this.speedY*this.speedY));
+            }
       } 
-   }
-
-   
-}
+   }//update 
+}//class Bal
 
 class Blok {
     constructor(myBlokX, myBlokY, myBlokWidth, myBlockHeight) {
@@ -64,17 +68,17 @@ class Blok {
 }
 
 
-var ballen = [new Bal(50, 100, 6, 3, false),
-              new Bal(300, 150, 5, 7, true),
-              new Bal(600, 260, 4, 9, false)];
+var ballen = [new Bal(50, 100, 5, 5, false)];
 
 
 var blokken = [];   
-for (var i = 0; i < 10; i++) {
-    blokken.push(
-        new Blok(128*i, 50, 128, 25)
-    );
-    var data = blokken[i];
+for (var j = 0; j < 4; j++) {
+    for (var i = 0; i < 10; i++) {
+        blokken.push(
+            new Blok(128*i, 50 + 25*j, 128, 25)
+        );
+        var data = blokken[i];
+    }
 }
 
 
