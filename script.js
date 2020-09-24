@@ -42,41 +42,42 @@ class Bal {
             if (mouseX-this.x < 0){
                 this.speedX = Math.sqrt(100-(this.speedY*this.speedY));
             }
-      } 
+      }
    }//update 
 }//class Bal
 
 class Blok {
-    constructor(myBlokX, myBlokY, myBlokWidth, myBlockHeight) {
+    constructor(myBlokX, myBlokY, myBlokWidth, myBlockHeight, myBlockStatus) {
     this.blokX = myBlokX;
     this.blokY = myBlokY;
     this.blokWidth = myBlokWidth;
     this.blokHeight = myBlockHeight;
+    this.blokStatus = myBlockStatus;
     }
 
     show() {
         fill(255, 0, 0);
-        rect(this.blokX, this.blokY, this.blokWidth, this.blokHeight);
+        if (this.blokStatus > 0){
+            rect(this.blokX, this.blokY, this.blokWidth, this.blokHeight);
+        }
     }//show
 
     update() {
-        if (this.x > 0 && this.x < 1280 && this.y > 50 && this.y < 75) {
-            this.speedY = this.speedY * -1;
-        }
+        //bal omkeren als tegen blokjes en interacties
+        
+      
+        
     }//update
 
 }//class Bal
 
-var ballen = [new Bal(50, 100, 5, 5, false)];
-var blokken = [];   
+var ballen = [new Bal(50, 400, 5, 5, false)];
+var blokken = [];  
 for (var j = 0; j < 4; j++) {
     for (var i = 0; i < 10; i++) {
-        blokken.push(
-            new Blok(128*i, 50 + 25*j, 128, 25)
-        );
-        var data = blokken[i];
+        blokken.push(new Blok(128*i, 50 + 25*j , 128, 25, 1));
     }
-}
+}  
 
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
@@ -101,7 +102,17 @@ function draw() {
       blok.update();
   }
   
+  // omkeren tegen blokjes
+  for(var i = 0; i < ballen.length; i++){
+    if (ballen[i].x > 0 && ballen[i].x < 1280 && ballen[i].y > blokken[0].blokY && ballen[i].y < blokken[blokken.length-1].blokY + 25 && blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus === 1){
+        blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus = 0; 
+        ballen[i].speedY = ballen[i].speedY * -1;   
+    }
+  }
+  
+
   //teken platform
   fill(255, 0, 0);
   rect(mouseX - 100, 600, 200, 25);
-}
+
+}//draw
