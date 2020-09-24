@@ -13,12 +13,11 @@ class Bal {
 
    show() {
       if (this.isSuper === true) {
-         fill(255, 0, 0);
-      }
-      else {
+         fill(255,215,0);
+      } else {
          fill(255, 100, 255);
       }
-      
+
       ellipse(this.x, this.y, this.diameter, this.diameter);
    }//show
 
@@ -63,15 +62,15 @@ class Blok {
     }//show
 
     update() {
-        //bal omkeren als tegen blokjes en interacties
-        
-      
         
     }//update
 
 }//class Bal
 
-var ballen = [new Bal(50, 400, 5, 5, false)];
+
+var ballen = [new Bal(50, 400, 5, 5, false),
+              new Bal(600, 200, -5, 3, true)];
+
 var blokken = [];  
 for (var j = 0; j < 4; j++) {
     for (var i = 0; i < 10; i++) {
@@ -94,6 +93,12 @@ function draw() {
     var bal = ballen[i];
     bal.show();
     bal.update();
+    if (ballen[i].x > 0 && ballen[i].x < 1280 && ballen[i].y > blokken[0].blokY && ballen[i].y < blokken[blokken.length-1].blokY + 25 && blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus === 1){
+        blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus = 0;
+        if (ballen[i].isSuper === false) {
+            ballen[i].speedY = ballen[i].speedY * -1;   
+        }
+    }
   }
   // ga alle blokken af
   for (var i = 0; i < blokken.length; i++) {
@@ -101,15 +106,6 @@ function draw() {
       blok.show();
       blok.update();
   }
-  
-  // omkeren tegen blokjes
-  for(var i = 0; i < ballen.length; i++){
-    if (ballen[i].x > 0 && ballen[i].x < 1280 && ballen[i].y > blokken[0].blokY && ballen[i].y < blokken[blokken.length-1].blokY + 25 && blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus === 1){
-        blokken[Math.floor(ballen[i].x/128) + 10 * Math.floor((ballen[i].y-50)/25)].blokStatus = 0; 
-        ballen[i].speedY = ballen[i].speedY * -1;   
-    }
-  }
-  
 
   //teken platform
   fill(255, 0, 0);
