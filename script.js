@@ -10,8 +10,6 @@ class SpelElement {
     }
 }
 
-
-
 class Bal extends SpelElement {
     speedX;
     speedY;
@@ -64,10 +62,10 @@ class Blok extends SpelElement {
     blokHeight;
     blokStatus;
     constructor(_x, _y, _blokWidth, _blockHeight, _blockStatus) {
-    super (_x, _y);
-    this.blokWidth = _blokWidth;
-    this.blokHeight = _blockHeight;
-    this.blokStatus = _blockStatus;
+        super (_x, _y);
+        this.blokWidth = _blokWidth;
+        this.blokHeight = _blockHeight;
+        this.blokStatus = _blockStatus;
     }
 
     show() {
@@ -83,6 +81,18 @@ class Blok extends SpelElement {
 
 }//class Bal
 
+class Score extends SpelElement {
+    score;
+    constructor(_x, _y, _score){
+        super (_x, _y);
+        this.score = _score;
+    }
+
+    show() {
+        text(this.score, this.x, this.y);
+    }
+}
+
 
 var ballen = [new Bal(50, 400, 5, 5, false),
               new Bal(600, 200, -5, 3, true)];
@@ -93,6 +103,8 @@ for (var j = 0; j < 4; j++) {
         blokken.push(new Blok(128*i, 50 + 25*j , 128, 25, 1));
     }
 }  
+
+
 
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
@@ -126,5 +138,8 @@ function draw() {
   //teken platform
   fill(255, 0, 0);
   rect(mouseX - 100, 600, 200, 25);
+
+  //score test
+  text("test", 400, 400);
 
 }//draw
