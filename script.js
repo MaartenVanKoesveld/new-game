@@ -1,6 +1,14 @@
 
 
 
+
+class Game {
+    run () {
+        
+    }
+}
+
+
 class SpelElement {
     x;
     y;
@@ -104,18 +112,7 @@ for (var j = 0; j < 4; j++) {
     }
 }  
 
-
-
-function setup() {
-  // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
-  createCanvas(1280, 720);
-}
- 
-
-function draw() {
-  // Kleur de achtergrond blauw, zodat je het kunt zien
-  background('blue');
-  
+function run() {
   // ga alle ballen af
   for (var i = 0; i < ballen.length; i++) {
     var bal = ballen[i];
@@ -134,6 +131,19 @@ function draw() {
       blok.show();
       blok.update();
   }
+}
+
+function setup() {
+  // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
+  createCanvas(1280, 720);
+}
+ 
+
+function draw() {
+  // Kleur de achtergrond blauw, zodat je het kunt zien
+  background('blue');
+  run();
+
 
   //teken platform
   fill(255, 0, 0);
