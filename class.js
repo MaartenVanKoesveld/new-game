@@ -17,6 +17,7 @@ class Game {
         // Kleur de achtergrond blauw, zodat je het kunt zien
         background("black");
         player[0].show();
+        player[0].update();
     }
 }
 
@@ -32,7 +33,19 @@ class Player extends SpelElement {
     }
 
     update() {
+        // naar rechts bewegen
+        if (keyIsPressed === true && keyCode === 68) {
+            this.x = this.x + 5;
+        }
+        // naar links bewegen
+        if (keyIsPressed === true && keyCode === 65) {
+            this.x = this.x - 5;
+        }
+        // springen
+        if (keyIsPressed === true && keyCode === 32) {
 
+            this.y = this.y - 3;
+        }
     }
 
 }
