@@ -22,13 +22,20 @@ class Game {
         // player
         player[0].show();
         player[0].update();
+
+        // platforms
+        platform[0].show();
+
+        //collision
+        collision[0].playerCollision();
     }
 }
 
 class Player extends SpelElement {
-
-    constructor(_x, _y, _w, _h, _gravityAffected) {
+    speedX; // horizontale snelheid
+    constructor(_x, _y, _w, _h, _gravityAffected, _speedX) {
         super(_x, _y, _w, _h, _gravityAffected);
+        this.speedX = _speedX;
     }
 
     show() {
@@ -39,31 +46,43 @@ class Player extends SpelElement {
     update() {
         // naar rechts bewegen
         if (keyIsPressed === true && keyCode === 68) {
-            this.x = this.x + 5;
+            this.x = this.x + this.speedX;
         }
         // naar links bewegen
         if (keyIsPressed === true && keyCode === 65) {
-            this.x = this.x - 5;
+            this.x = this.x - this.speedX;
         }
         // springen
         if (keyIsPressed === true && keyCode === 32) {
-
-            this.y = this.y - 5;
+            var i = 0;
+            while (i < 7) {
+                this.y = this.y - (5 * Math.sin(i));
+                i++;
+            }
+            
         }
         // gravity 
         if (this.gravityAffected === true) {
-            this.y = this.y + 2;
+            this.y = this.y + 5;
         }
 
     }
 
 }
 
-class Finish extends SpelElement {
+class Platform extends SpelElement {
 
+    constructor(_x, _y, _w, _h, _gravityAffected) {
+        super(_x, _y, _w, _h, _gravityAffected);
+    }
+
+    show() {
+        fill(130,130,130);
+        rect(this.x, this.y, this.w, this.h);
+    }
 }
 
-class Platform extends SpelElement {
+class Finish extends SpelElement {
 
 }
 
@@ -72,7 +91,14 @@ class Obstakel extends SpelElement {
 }
 
 class Collision {
-
+    playerCollision() {
+        if (player[0].y + player[0].h >= platform[0].y && player[0].y + player[0].h <= platform[0].y + platform[0].h
+            && player[0].x >= platform[0].x - player[0].w && player[0].x <= platform[0].x + platform[0].w) {
+            player[0].gravityAffected = false;
+        } else {
+            player[0].gravityAffected = true;
+        }
+    }
 }
 
 
